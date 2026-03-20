@@ -132,12 +132,13 @@ function update() {
 
   // colisão esquerda
   if (player.x < leftLimit) {
-    player.x = leftLimit;
+    player.x += 2; // empurra pra dentro da pista
   }
 
   // colisão direita
   if (player.x > rightLimit) {
     player.x = rightLimit;
+    player.x -= 2; // empurra pra dentro da pista
   }
     
 }
