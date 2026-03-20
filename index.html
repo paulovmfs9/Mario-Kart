@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Mini Mario Kart 🏎️</title>
 <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
-<style>
-  body { margin: 0; background: #222; }
-</style>
+<style>body { margin:0; background:#222; }</style>
 </head>
 <body>
 
@@ -15,47 +12,70 @@ const config = {
   type: Phaser.AUTO,
   width: 400,
   height: 600,
-  physics: { default: 'arcade' },
   scene: { create, update }
 };
 
 let player;
-let cursors;
+let curve = 0;
+let curveDirection = 1;
 let roadLines = [];
 
 const game = new Phaser.Game(config);
 
 function create() {
-  // fundo da estrada
-  this.add.rectangle(200, 300, 300, 600, 0x333333);
+  this.add.rectangle(200, 300, 400, 600, 0x6ecb3c); // grama
 
-  // linhas da pista
-  for (let i = 0; i < 20; i++) {
-    let line = this.add.rectangle(200, i * 40, 5, 20, 0xffffff);
+  this.road = this.add.graphics();
+
+  // linhas centrais
+  for (let i = 0; i < 30; i++) {
+    let line = this.add.rectangle(200, i * 20, 4, 10, 0xffffff);
     roadLines.push(line);
   }
 
-  // jogador (carrinho)
-  player = this.add.rectangle(200, 500, 40, 60, 0xff0000);
-
-  // controles
-  cursors = this.input.keyboard.createCursorKeys();
+  player = this.add.rectangle(200, 520, 50, 80, 0xff0000);
 }
 
 function update() {
-  // mover linhas da pista
-  roadLines.forEach(line => {
+  this.road.clear();
+
+  // muda curva automaticamente
+  curve += 0.02 * curveDirection;
+
+  if (curve > 1 || curve < -1) {
+    curveDirection *= -1;
+  }
+
+  for (let i = 0; i < 30; i++) {
+    let scale = i / 30;
+
+    let width = 100 + scale * 250;
+
+    // DESLOCAMENTO DA CURVA
+    let offset = curve * Math.pow(scale, 2) * 200;
+
+    this.road.fillStyle(0x333333);
+    this.road.fillRect(
+      200 - width / 2 + offset,
+      i * 20,
+      width,
+      20
+    );
+  }
+
+  // linhas centrais acompanhando curva
+  roadLines.forEach((line, i) => {
+    let scale = i / 30;
+    let offset = curve * Math.pow(scale, 2) * 200;
+
     line.y += 5;
-    if (line.y > 600) line.y = 0;
+    line.x = 200 + offset;
+    line.width = 4 + scale * 10;
+
+    if (line.y > 600) {
+      line.y = 0;
+    }
   });
-
-  // movimento do carro
-  if (cursors.left.isDown) player.x -= 5;
-  if (cursors.right.isDown) player.x += 5;
-
-  // limites
-  if (player.x < 80) player.x = 80;
-  if (player.x > 320) player.x = 320;
 }
 </script>
 
