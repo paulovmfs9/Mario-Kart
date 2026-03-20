@@ -131,14 +131,18 @@ function update() {
   let leftLimit = currentRoadCenter - currentRoadWidth / 2 + 10;
   let rightLimit = currentRoadCenter + currentRoadWidth / 2 - 10;
 
-  // colisão esquerda
-  if (player.x < leftLimit) {
-    player.x = leftLimit + 2;
-  }
+  let halfCar = player.width / 2;
 
-  // colisão direita
+  let leftLimit = currentRoadCenter - currentRoadWidth / 2 + halfCar;
+  let rightLimit = currentRoadCenter + currentRoadWidth / 2 - halfCar;
+
+  // trava real na pista
+  if (player.x < leftLimit) {
+    player.x = leftLimit;
+  } 
+
   if (player.x > rightLimit) {
-    player.x = rightLimit - 2;
+    player.x = rightLimit;
   }
     
 }
