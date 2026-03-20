@@ -39,6 +39,8 @@ let friction = 0.05;
 let currentRoadCenter = 0;
 let currentRoadWidth = 0;
 
+let roadOffset = 0;
+
 const game = new Phaser.Game(config);
 
 function create() {
@@ -66,6 +68,8 @@ function create() {
 function update() {
   this.road.clear();
 
+  roadOffset += speed * 2;
+
   // curva
   curve += 0.02 * curveDirection;
   if (curve > 1 || curve < -1) curveDirection *= -1;
@@ -78,13 +82,11 @@ function update() {
   currentRoadCenter = this.scale.width / 2 + (curve * Math.pow(playerScale, 2) * 200);
 
   for (let i = 0; i < 30; i++) {
-    let roadOffset = 0;
     let scale = i / 30;
     let width = 80 + scale * 180;
     let offset = curve * Math.pow(scale, 2) * 200;
 
     let center = this.scale.width / 2 + offset;
-    roadOffset += speed * 2;
 
     let y = (i * 20 + roadOffset) % this.scale.height;
     
@@ -136,6 +138,7 @@ function update() {
 
   if (player.x <= leftLimit + 5 || player.x >= rightLimit - 5) {
   speed *= 0.96; // perde velocidade
+}
 }
 </script>
 
