@@ -93,7 +93,7 @@ function update() {
     let y = i * segmentHeight - (roadOffset % segmentHeight);
     
     let borderWidth = 6 + scale * 10;
-    let color = i % 2 === 0 ? 0xff0000 : 0xffffff;
+    let color = Math.floor(i / 2) % 2 === 0 ? 0xff0000 : 0xffffff;
 
     // bordas
     this.road.fillStyle(color);
