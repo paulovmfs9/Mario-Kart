@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
-<style>body { margin:0; background:#222; }</style>
+<style>
+  body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #222;
+}
+</style>
 </head>
 <body>
 
@@ -13,6 +20,10 @@ const config = {
   width: window.innerWidth,
   height: window.innerHeight,
   scene: { create, update }
+
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    autoCenter: Phaser.Scale.CENTER_BOTH
 };
 
 let player;
@@ -24,7 +35,13 @@ let roadLines = [];
 const game = new Phaser.Game(config);
 
 function create() {
-  this.add.rectangle(200, 300, 400, 600, 0x6ecb3c);
+  this.add.rectangle(
+  this.scale.width / 2,
+  this.scale.height / 2,
+  this.scale.width,
+  this.scale.height,
+  0x6ecb3c
+);
 
   this.road = this.add.graphics();
 
@@ -33,7 +50,13 @@ function create() {
     roadLines.push(line);
   }
 
-  player = this.add.rectangle(200, 520, 50, 80, 0xff0000);
+  player = this.add.rectangle(
+  this.scale.width / 2,
+  this.scale.height - 80,
+  50,
+  80,
+  0xff0000
+);
 
   cursors = this.input.keyboard.createCursorKeys();
 }
@@ -79,8 +102,8 @@ function update() {
   player.x += curve * 3;
 
   // 🚧 LIMITE DA PISTA
-  if (player.x < 80) player.x = 80;
-  if (player.x > 320) player.x = 320;
+  if (player.x < this.scale.width * 0.2) player.x = this.scale.width * 0.2;
+  if (player.x > this.scale.width * 0.8) player.x = this.scale.width * 0.8;
 }
 </script>
 
