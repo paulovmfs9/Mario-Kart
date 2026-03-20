@@ -75,13 +75,6 @@ function update() {
   curve += 0.02 * curveDirection;
   if (curve > 1 || curve < -1) curveDirection *= -1;
 
-  function update() {
-  this.road.clear();
-
-  // curva dinâmica
-  curve += 0.02 * curveDirection;
-  if (curve > 1 || curve < -1) curveDirection *= -1;
-
   // cálculo da pista perto do jogador
   let playerZone = 29;
   let playerScale = playerZone / 30;
