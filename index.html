@@ -16,6 +16,7 @@ const config = {
 };
 
 let player;
+let cursors;
 let curve = 0;
 let curveDirection = 1;
 let roadLines = [];
@@ -23,35 +24,30 @@ let roadLines = [];
 const game = new Phaser.Game(config);
 
 function create() {
-  this.add.rectangle(200, 300, 400, 600, 0x6ecb3c); // grama
+  this.add.rectangle(200, 300, 400, 600, 0x6ecb3c);
 
   this.road = this.add.graphics();
 
-  // linhas centrais
   for (let i = 0; i < 30; i++) {
     let line = this.add.rectangle(200, i * 20, 4, 10, 0xffffff);
     roadLines.push(line);
   }
 
   player = this.add.rectangle(200, 520, 50, 80, 0xff0000);
+
+  cursors = this.input.keyboard.createCursorKeys();
 }
 
 function update() {
   this.road.clear();
 
-  // muda curva automaticamente
+  // curva dinâmica
   curve += 0.02 * curveDirection;
-
-  if (curve > 1 || curve < -1) {
-    curveDirection *= -1;
-  }
+  if (curve > 1 || curve < -1) curveDirection *= -1;
 
   for (let i = 0; i < 30; i++) {
     let scale = i / 30;
-
     let width = 100 + scale * 250;
-
-    // DESLOCAMENTO DA CURVA
     let offset = curve * Math.pow(scale, 2) * 200;
 
     this.road.fillStyle(0x333333);
@@ -63,7 +59,7 @@ function update() {
     );
   }
 
-  // linhas centrais acompanhando curva
+  // linhas
   roadLines.forEach((line, i) => {
     let scale = i / 30;
     let offset = curve * Math.pow(scale, 2) * 200;
@@ -72,10 +68,19 @@ function update() {
     line.x = 200 + offset;
     line.width = 4 + scale * 10;
 
-    if (line.y > 600) {
-      line.y = 0;
-    }
+    if (line.y > 600) line.y = 0;
   });
+
+  // 🎮 CONTROLE DO CARRO
+  if (cursors.left.isDown) player.x -= 6;
+  if (cursors.right.isDown) player.x += 6;
+
+  // 🌀 CURVA PUXANDO O CARRO
+  player.x += curve * 3;
+
+  // 🚧 LIMITE DA PISTA
+  if (player.x < 80) player.x = 80;
+  if (player.x > 320) player.x = 320;
 }
 </script>
 
