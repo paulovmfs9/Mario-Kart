@@ -85,6 +85,7 @@ function update() {
   for (let i = 0; i < 30; i++) {
     let scale = i / 30;
     let width = 80 + scale * 180;
+    
     roadCurve += curve * 0.1; // acumula a curva
     
     let center = this.scale.width / 2 + roadCurve;
@@ -92,7 +93,7 @@ function update() {
     let segmentHeight = 20;
     let y = i * segmentHeight - (roadOffset % segmentHeight);
     
-    let borderWidth = 6 + scale * 10;
+    let borderWidth = 15 + scale * 30;
     let color = Math.floor(i / 2) % 2 === 0 ? 0xff0000 : 0xffffff;
 
     // bordas
