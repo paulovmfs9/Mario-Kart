@@ -86,9 +86,6 @@ function update() {
     let roadWidth = width;
     let borderWidth = 10 + scale * 15;
 
-  // largura da borda com perspectiva
-    let borderWidth = 5 + scale * 12;
-
   // alternância de cor (vermelho/branco)
     let color = i % 2 === 0 ? 0xff0000 : 0xffffff;
 
@@ -132,6 +129,7 @@ function update() {
 
   // colisão esquerda
   if (player.x < leftLimit) {
+    player.x = leftLimit;
     player.x += 2; // empurra pra dentro da pista
   }
 
