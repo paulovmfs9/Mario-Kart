@@ -78,13 +78,16 @@ function update() {
   currentRoadCenter = this.scale.width / 2 + (curve * Math.pow(playerScale, 2) * 200);
 
   for (let i = 0; i < 30; i++) {
+    let roadOffset = 0;
     let scale = i / 30;
     let width = 80 + scale * 180;
     let offset = curve * Math.pow(scale, 2) * 200;
 
     let center = this.scale.width / 2 + offset;
-    let y = (i * 20 + speed * 5) % this.scale.height;
+    roadOffset += speed * 2;
 
+    let y = (i * 20 + roadOffset) % this.scale.height;
+    
     let borderWidth = 6 + scale * 10;
     let color = i % 2 === 0 ? 0xff0000 : 0xffffff;
 
@@ -113,14 +116,14 @@ function update() {
 
   // 🛑 FREIO
   if (cursors.down.isDown) {
-    speed -= acceleration * 1.5;
+    speed -= acceleration;
   }
 
   // limite
   speed = Phaser.Math.Clamp(speed, 0, maxSpeed);
   
   // curva influencia
-  player.x += curve * speed * 0.4;
+  player.x += curve * speed * 0.25;
 
   // colisão
   let halfCar = player.width / 2;
@@ -130,6 +133,9 @@ function update() {
 
   if (player.x < leftLimit) player.x = leftLimit;
   if (player.x > rightLimit) player.x = rightLimit;
+
+  if (player.x <= leftLimit + 5 || player.x >= rightLimit - 5) {
+  speed *= 0.96; // perde velocidade
 }
 </script>
 
