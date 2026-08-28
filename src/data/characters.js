@@ -1,0 +1,48 @@
+// Dados de personagens
+
+export const CHARACTERS = [
+  {
+    id: 'chef-rosa',
+    name: 'Chef Rosa',
+    color: '#ff6eb8',
+    speed: 1.01,
+    accel: 1.02,
+    handling: 1.04,
+    drift: 1.06,
+    icon: '🍓',
+    klass: 'pink',
+  },
+  {
+    id: 'conde-ciano',
+    name: 'Conde Ciano',
+    color: '#4fd8ff',
+    speed: 1.05,
+    accel: 0.97,
+    handling: 0.96,
+    drift: 0.98,
+    icon: '🧊',
+    klass: 'cyan',
+  },
+  {
+    id: 'pistache-kid',
+    name: 'Pistache Kid',
+    color: '#7ef79d',
+    speed: 0.97,
+    accel: 1.07,
+    handling: 1.08,
+    drift: 1.03,
+    icon: '🥝',
+    klass: 'green',
+  },
+  {
+    id: 'barao-brulee',
+    name: 'Barão Brûlée',
+    color: '#ffca46',
+    speed: 1.08,
+    accel: 0.95,
+    handling: 0.94,
+    drift: 0.96,
+    icon: '🔥',
+    klass: 'gold',
+  },
+];
